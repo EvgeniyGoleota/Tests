@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">Tests</string>
+    <string name="enter_your_number">Enter your number</string>
+    <string name="number_greater_error">Error: number greater than 1000</string>
+    <string name="number_less_error">Error: number less than 100</string>
+    <string name="use_number">Please use a number</string>
+</resources>
