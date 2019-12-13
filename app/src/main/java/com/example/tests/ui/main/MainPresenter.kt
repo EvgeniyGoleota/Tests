@@ -1,8 +1,9 @@
 package com.example.tests.ui.main
 
+import android.content.Context
 import com.example.tests.R
 
-class MainPresenter(private val mView: MainContract.View) : MainContract.Presenter {
+class MainPresenter(private val mView: MainContract.View, private val context: Context) : MainContract.Presenter {
     override fun validateNumber(number: Double) {
         when {
             number > 1000 -> {
@@ -19,8 +20,8 @@ class MainPresenter(private val mView: MainContract.View) : MainContract.Present
         }
     }
 
-    override fun clickButton() {
-
+    override fun clickButton(text: String) {
+        val result = modifyText(text, context)
+        mView.setResult(result)
     }
-
 }

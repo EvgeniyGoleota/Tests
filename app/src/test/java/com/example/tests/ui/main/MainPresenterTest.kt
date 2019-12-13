@@ -1,26 +1,35 @@
 package com.example.tests.ui.main
 
+import android.content.Context
+import android.os.Build
 import com.example.tests.R
-import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
-import org.junit.Assert.*
+import org.junit.runner.RunWith
 import org.mockito.Mock
-import org.mockito.Mockito.verify
+import org.mockito.Mockito
+import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
 
+@Config(sdk = [Build.VERSION_CODES.O_MR1])
+@RunWith(RobolectricTestRunner::class)
 class MainPresenterTest {
 
     @Mock
     lateinit var view: MainContract.View
 
-    lateinit var presenter: MainContract.Presenter
+    @Mock
+    private lateinit var context: Context
+
+    private lateinit var presenter: MainContract.Presenter
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        presenter = MainPresenter(view)
+        presenter = MainPresenter(view, context)
     }
 
     @Test
@@ -43,7 +52,11 @@ class MainPresenterTest {
         verify(view).showSnackBar(R.string.number_less_error)
     }
 
+    private fun <T> any(): T = Mockito.any<T>()
+
     @Test
     fun clickButton() {
+        presenter.clickButton("111")
+        verify(view).setResult(any())
     }
 }

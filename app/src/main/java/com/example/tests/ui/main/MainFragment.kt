@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import android.text.Editable
+import android.text.SpannableString
 import android.text.TextWatcher
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -54,11 +55,15 @@ class MainFragment : Fragment(), MainContract.View {
             }
 
         })
+
+        button.setOnClickListener {
+             mPresenter.clickButton(message.text.toString())
+        }
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        mPresenter = MainPresenter(this)
+        context?.let { mPresenter = MainPresenter(this, it) }
     }
 
     override fun showSnackBar(messageId: Int) {
@@ -75,5 +80,9 @@ class MainFragment : Fragment(), MainContract.View {
 
     override fun enableButton() {
         button.isEnabled = true
+    }
+
+    override fun setResult(string: SpannableString) {
+        result.text = string
     }
 }
