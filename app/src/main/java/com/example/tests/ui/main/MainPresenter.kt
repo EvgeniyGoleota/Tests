@@ -3,7 +3,7 @@ package com.example.tests.ui.main
 import android.content.Context
 import com.example.tests.R
 
-class MainPresenter(private val mView: MainContract.View, private val context: Context) : MainContract.Presenter {
+class MainPresenter(private val mView: MainContract.View, private val context: Context, private val spanUtils: SpanUtils) : MainContract.Presenter {
     override fun validateNumber(number: Double) {
         when {
             number > 1000 -> {
@@ -21,7 +21,7 @@ class MainPresenter(private val mView: MainContract.View, private val context: C
     }
 
     override fun clickButton(text: String) {
-        val result = modifyText(text, context)
+        val result = spanUtils.modifyFirstLetter(text, context)
         mView.setResult(result)
     }
 }

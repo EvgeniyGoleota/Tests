@@ -9,28 +9,31 @@ import android.text.style.StyleSpan
 import androidx.core.content.ContextCompat
 import androidx.test.core.app.ApplicationProvider
 import com.example.tests.R
-import org.junit.Assert.*
 import org.junit.Before
 import org.junit.Test
+
+import org.junit.Assert.*
 import org.junit.runner.RunWith
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @Config(sdk = [Build.VERSION_CODES.O_MR1])
 @RunWith(RobolectricTestRunner::class)
-class UtilsKtTest {
+class SpanUtilsTest {
 
-    lateinit var context: Context
+    private lateinit var context: Context
+    private lateinit var spanUtils: SpanUtils
 
     @Before
     fun setUp() {
         context = ApplicationProvider.getApplicationContext<Application>()
+        spanUtils = SpanUtils()
     }
 
     @Test
-    fun modifyText() {
+    fun modifyFirstLetter() {
         val text  = "111"
-        val actual = modifyText(text, context)
+        val actual = spanUtils.modifyFirstLetter(text, context)
 
         val colorSpans = actual.getSpans(0, actual.length, ForegroundColorSpan::class.java)
         assertEquals(1, colorSpans.size)

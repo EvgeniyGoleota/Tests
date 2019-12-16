@@ -3,13 +3,15 @@ package com.example.tests.ui.main
 import android.content.Context
 import android.os.Build
 import com.example.tests.R
+import com.nhaarman.mockitokotlin2.argumentCaptor
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.verify
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
 import org.junit.runner.RunWith
-import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.Mockito.*
 import org.mockito.MockitoAnnotations
 import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
@@ -18,18 +20,16 @@ import org.robolectric.annotation.Config
 @RunWith(RobolectricTestRunner::class)
 class MainPresenterTest {
 
-    @Mock
-    lateinit var view: MainContract.View
-
-    @Mock
-    private lateinit var context: Context
+    private val view: MainContract.View = mock()
+    private val context: Context = mock()
+    private val spanUtils: SpanUtils = mock()
 
     private lateinit var presenter: MainContract.Presenter
 
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        presenter = MainPresenter(view, context)
+        presenter = MainPresenter(view, context, spanUtils)
     }
 
     @Test
@@ -56,7 +56,14 @@ class MainPresenterTest {
 
     @Test
     fun clickButton() {
-        presenter.clickButton("111")
+        val text = "111"
+        presenter.clickButton(text)
+
+        argumentCaptor<String>().apply {
+            verify(spanUtils).modifyFirstLetter(capture(), any())
+            Assert.assertEquals(text, firstValue)
+        }
+
         verify(view).setResult(any())
     }
 }
