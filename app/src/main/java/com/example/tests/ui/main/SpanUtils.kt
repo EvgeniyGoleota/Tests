@@ -9,9 +9,11 @@ import android.text.style.StyleSpan
 import androidx.core.content.ContextCompat
 import com.example.tests.R
 
-class SpanUtils {
+class SpanUtils(private val context: Context) {
 
-    fun modifyFirstLetter(text: String, context: Context) = SpannableString(text).apply {
+    private fun getText() = context.getString(R.string.test_string)
+
+    fun modifyFirstLetter() = SpannableString(getText()).apply {
         setSpan(ForegroundColorSpan(ContextCompat.getColor(context, R.color.red)), 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
         setSpan(StyleSpan(Typeface.BOLD), 0, 1, Spannable.SPAN_INCLUSIVE_EXCLUSIVE)
     }

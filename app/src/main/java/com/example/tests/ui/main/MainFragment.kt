@@ -63,7 +63,7 @@ class MainFragment : Fragment(), MainContract.View {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        context?.let { mPresenter = MainPresenter(this, it, SpanUtils()) }
+        context?.let { mPresenter = MainPresenter(this, SpanUtils(it)) }
     }
 
     override fun showSnackBar(messageId: Int) {

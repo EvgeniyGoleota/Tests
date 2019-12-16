@@ -9,6 +9,8 @@ import android.text.style.StyleSpan
 import androidx.core.content.ContextCompat
 import androidx.test.core.app.ApplicationProvider
 import com.example.tests.R
+import com.nhaarman.mockitokotlin2.verify
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
@@ -27,13 +29,12 @@ class SpanUtilsTest {
     @Before
     fun setUp() {
         context = ApplicationProvider.getApplicationContext<Application>()
-        spanUtils = SpanUtils()
+        spanUtils = SpanUtils(context)
     }
 
     @Test
     fun modifyFirstLetter() {
-        val text  = "111"
-        val actual = spanUtils.modifyFirstLetter(text, context)
+        val actual = spanUtils.modifyFirstLetter()
 
         val colorSpans = actual.getSpans(0, actual.length, ForegroundColorSpan::class.java)
         assertEquals(1, colorSpans.size)
@@ -42,5 +43,12 @@ class SpanUtilsTest {
         val styleSpans = actual.getSpans(0, actual.length, StyleSpan::class.java)
         assertEquals(1, styleSpans.size)
         assertEquals(Typeface.BOLD, styleSpans[0].style)
+    }
+
+    @Test
+    fun getText() {
+        val actual = spanUtils.modifyFirstLetter().toString()
+        val expected = context.resources.getString(R.string.test_string)
+        assertEquals(expected, actual)
     }
 }

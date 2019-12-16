@@ -3,10 +3,8 @@ package com.example.tests.ui.main
 import android.content.Context
 import android.os.Build
 import com.example.tests.R
-import com.nhaarman.mockitokotlin2.argumentCaptor
 import com.nhaarman.mockitokotlin2.mock
 import com.nhaarman.mockitokotlin2.verify
-import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
 
@@ -29,7 +27,7 @@ class MainPresenterTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        presenter = MainPresenter(view, context, spanUtils)
+        presenter = MainPresenter(view, spanUtils)
     }
 
     @Test
@@ -59,11 +57,12 @@ class MainPresenterTest {
         val text = "111"
         presenter.clickButton(text)
 
-        argumentCaptor<String>().apply {
-            verify(spanUtils).modifyFirstLetter(capture(), any())
-            Assert.assertEquals(text, firstValue)
-        }
+//        argumentCaptor<String>().apply {
+//            verify(spanUtils).modifyFirstLetter()
+//            Assert.assertEquals(text, firstValue)
+//        }
 
+        verify(spanUtils).modifyFirstLetter()
         verify(view).setResult(any())
     }
 }
